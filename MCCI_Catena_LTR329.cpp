@@ -27,28 +27,21 @@ using namespace McciCatenaLtr329;
 cLTR329::cLTR329()
     {
     }
-//#if defined(ESP32) || defined(ESP8266)
-cLTR329::cLTR329(uint8_t sda, uint8_t scl) : sda(sda), scl(scl)
-    {
-    }
-//#endif
+
 cLTR329::~cLTR329()
     {
     }
 
-void cLTR329::begin()
+bool cLTR329::begin()
     {
     // Initial wait after Power Up
     delay(100);
     // Initialize I2C
-    if(sda != -1 && scl != -1)
+    if (this->m_wire == nullptr)
         {
-        Wire.begin(sda, scl);
+        return this->setLastError(Error::NoWire);
         }
-    else
-        {
-        Wire.begin();
-        }
+
     // Reset LTR329
     reset();
     // Initialize Parameters
@@ -82,6 +75,27 @@ void cLTR329::reset()
         Serial.println("Finished");
     #endif
     }
+
+/*
+
+Name:	cLTR329::readLux()
+
+Function:
+    Read a lux data from LTR329 sensor.
+
+Definition:
+    float cLTR329::readLux(
+        void)
+
+Description:
+    It is used to read a Lux from a light source. The light data is read
+    and it's ratio is been calculated. Using the ratio and PFACTOR, few calculation and condition
+    are made to find the final Lux value.
+
+Returns:
+    This function returns Lux in floating integer.
+
+*/
 
 float cLTR329::readLux()
     {
