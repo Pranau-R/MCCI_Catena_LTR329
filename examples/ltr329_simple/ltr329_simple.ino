@@ -36,10 +36,6 @@ using namespace McciCatenaLtr329;
 |
 \****************************************************************************/
 
-// I2C pins for MCCI Catena4610
-//#define I2C_SCL 35
-//#define I2C_SDA 36
-
 cLTR329 gLtr329 {Wire};
 
 /****************************************************************************\
@@ -52,8 +48,15 @@ void setup()
     {
     Serial.begin(115200);
 
+    while (!Serial);
+    Serial.println("LTR329 Simple Test!");
     // Start LTR329
-    gLtr329.begin();
+
+    if (! gLtr329.begin())
+        {
+        printFailure("gLtr329.begin() failed");
+        }
+
     Serial.println("[LTR329] begin. ");
 
     char tempString[64] = {};
