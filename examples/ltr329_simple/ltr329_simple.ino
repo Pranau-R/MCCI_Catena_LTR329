@@ -6,14 +6,7 @@ Function:
         Simple example for LTR329 Optical sensor.
 
 Copyright and License:
-        This file copyright (C) 2020 by
-
-        MCCI Corporation
-        3520 Krums Corners Road
-        Ithaca, NY  14850
-
-    See accompanying LICENSE file for copyright and license information.
-
+        See accompanying LICENSE file.
 Author:
         Pranau R, MCCI Corporation   May 2022
 

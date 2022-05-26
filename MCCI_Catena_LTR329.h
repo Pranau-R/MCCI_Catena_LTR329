@@ -6,14 +6,7 @@ Function:
     Definitions for the Catena library for the LITE ON LTR329 sensor.
 
 Copyright and License:
-    This file copyright (C) 2020 by
-
-        MCCI Corporation
-        3520 Krums Corners Road
-        Ithaca, NY  14850
-
-    See accompanying LICENSE file for copyright and license information.
-
+    See accompanying LICENSE file.
 Author:
     Pranau, MCCI Corporation   May 2022
 
@@ -216,7 +209,7 @@ namespace McciCatenaLtr329
             using Pin_t = std::int8_t;
 
             // constructor
-            cLTR329(TwoWire &wire, Address Address = Address::LTR329, Pin_t pinReady = -1)
+            cLTR329(TwoWire &wire, Address Address = Address::0x29H, Pin_t pinReady = -1)
                 : m_wire(&wire)
                 , m_address(Address)
                 , m_pinReady(pinReady)
@@ -225,17 +218,17 @@ namespace McciCatenaLtr329
             enum class Command : std::uint16_t
                 {
                 // sorted in ascending numerical order.
-                StartContinuousMeasurement              =   0x0036,     // 1.4.1; takes 16-bit arg (pressure)
-                StopContinuosMeasurement                =   0x0104,     // 1.4.2; no argument
-                GetDataReady                            =   0x0202,     // 1.4.4; no argument
-                ReadMeasurement                         =   0x0300,     // 1.4.5; no argument (returns 6*3 bytes: CO2, T, RH)
-                //SetMeasurementInterval                  =   0x4600,     // 1.4.3; set/get measurement interval; takes 16 bit arg (seconds)
-                //AltitudeCompensation                    =   0x5102,     // 1.4.8; 16-bit argument (meters above sea level)
-                //SetForcedRecalibration                  =   0x5204,     // 1.4.6; 16-bit CO2 concentration (ppm)
-                //EnableAutoSelfCal                       =   0x5306,     // 1.4.6; 16-bit bool (enable/disable)
-                //SetTemperatureOffset                    =   0x5403,     // 1.4.7; 16-bit temperature in 0.01 deg C
-                //ReadFirmwareVersion                     =   0xD100,     // 1.4.9; no argument (returns 3 bytes)
-                SoftReset                               =   0xD304,     // 1.4.10; no argument
+                //StartContinuousMeasurement              =   0x0036,
+                //StopContinuosMeasurement                =   0x0104,
+                //GetDataReady                            =   0x0202,
+                //ReadMeasurement                         =   0x0300,
+                //SetMeasurementInterval                  =   0x4600,
+                //AltitudeCompensation                    =   0x5102,
+                //SetForcedRecalibration                  =   0x5204,
+                //EnableAutoSelfCal                       =   0x5306,
+                //SetTemperatureOffset                    =   0x5403,
+                //ReadFirmwareVersion                     =   0xD100,
+                //SoftReset                               =   0xD304,
                 };
 
             // the errors
