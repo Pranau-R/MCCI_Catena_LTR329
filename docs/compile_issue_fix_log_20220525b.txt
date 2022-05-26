@@ -1,0 +1,33 @@
+"C:\\Users\\Pranau\\AppData\\Local\\Arduino15\\packages\\mcci\\tools\\arm-none-eabi-gcc\\6-2017-q2-update/bin/arm-none-eabi-gcc" -mcpu=cortex-m0 -mthumb -Os -Wl,--cref -Wl,--check-sections -Wl,--gc-sections -Wl,--entry=Reset_Handler -Wl,--unresolved-symbols=report-all -Wl,--warn-common -Wl,--warn-section-align "-TC:\\Users\\Pranau\\AppData\\Local\\Arduino15\\packages\\mcci\\hardware\\stm32\\3.0.5\\variants\\CATENA_461x/../mcci-ldscript-trusted.ld" -Wl,-z,max-page-size=4096 "-Wl,-Map,C:\\Users\\Pranau\\AppData\\Local\\Temp\\arduino_build_297781/ltr329_simple.ino.map" "-LC:\\Users\\Pranau\\AppData\\Local\\Arduino15\\packages\\arduino\\tools\\CMSIS\\4.5.0/CMSIS/Lib/GCC/" -larm_cortexM0l_math -o "C:\\Users\\Pranau\\AppData\\Local\\Temp\\arduino_build_297781/ltr329_simple.ino.elf" "-LC:\\Users\\Pranau\\AppData\\Local\\Temp\\arduino_build_297781" -Wl,--start-group "C:\\Users\\Pranau\\AppData\\Local\\Temp\\arduino_build_297781\\sketch\\ltr329_simple.ino.cpp.o" "C:\\Users\\Pranau\\AppData\\Local\\Temp\\arduino_build_297781\\libraries\\MCCI_Catena_LTR329\\MCCI_Catena_LTR329.cpp.o" "C:\\Users\\Pranau\\AppData\\Local\\Temp\\arduino_build_297781\\libraries\\Wire\\Wire.cpp.o" "C:\\Users\\Pranau\\AppData\\Local\\Temp\\arduino_build_297781\\core\\PeripheralPins.c.o" "C:\\Users\\Pranau\\AppData\\Local\\Temp\\arduino_build_297781\\core\\override_usbd_ll_connectionstate.c.o" "C:\\Users\\Pranau\\AppData\\Local\\Temp\\arduino_build_297781\\core\\variant.cpp.o" -Wl,--whole-archive "C:\\Users\\Pranau\\AppData\\Local\\Temp\\arduino_build_297781\\core\\core.a" -Wl,--no-whole-archive -lc -Wl,--end-group -lm -lgcc -lstdc++ --specs=nano.specs
+"C:\\Users\\Pranau\\AppData\\Local\\Arduino15\\packages\\mcci\\hardware\\stm32\\3.0.5/tools/mccibootloader/windows/mccibootloader_image" -v -t --sign --keyfile "C:\\Users\\Pranau\\AppData\\Local\\Arduino15\\packages\\mcci\\hardware\\stm32\\3.0.5/tools/mccibootloader/keys/mcci-test.pem" --patch "C:\\Users\\Pranau\\AppData\\Local\\Temp\\arduino_build_297781/ltr329_simple.ino.elf"
+Program settings:
+     --verbose: true
+        --hash: true
+        --sign: true
+    --add-time: true
+     --dry-run: false
+--force-binary: false
+       --patch: true
+     --keyfile: C:\Users\Pranau\AppData\Local\Arduino15\packages\mcci\hardware\stm32\3.0.5/tools/mccibootloader/keys/mcci-test.pem
+     --comment: <<none>>
+ --app-version: <<none>>
+
+input:          C:\Users\Pranau\AppData\Local\Temp\arduino_build_297781/ltr329_simple.ino.elf
+output:         {update}
+
+Treating C:\Users\Pranau\AppData\Local\Temp\arduino_build_297781/ltr329_simple.ino.elf as ELF file
+ELF: section 0: vaddr(8005000) paddr(8005000) size(a7d8) vend(800f7d8) offset(1000) fsize(a7d8) flags(7)
+ELF: section 1: vaddr(20000000) paddr(800f7d8) size(180) vend(20000180) offset(c000) fsize(180) flags(6)
+ELF: section 2: vaddr(800f958) paddr(800f958) size(a0) vend(800f9f8) offset(c958) fsize(a0) flags(4)
+ELF: section 3: vaddr(20000180) paddr(20000180) size(15e8) vend(20001768) offset(d180) fsize(0) flags(6)
+Elf: skipping non-contiguous writable section 3
+Keyfile comment: MCCI test code-signing key
+
+AppInfo from input:
+          magic:         3050414d
+           size:               40
+  targetAddress:          8005000
+      imageSize:             a958
+       authSize:               a0
+ posixTimestamp:                0
+        comment:         
