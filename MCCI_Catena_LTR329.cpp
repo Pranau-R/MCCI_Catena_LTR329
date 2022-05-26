@@ -23,7 +23,6 @@ Author:
 
 using namespace McciCatenaLtr329;
 
-
 cLTR329::cLTR329()
     {
     }
@@ -41,6 +40,12 @@ bool cLTR329::begin()
         {
         return this->setLastError(Error::NoWire);
         }
+    if (this->isRunning())
+        return true;
+
+    this->m_wire->begin();
+    // assume it's in idle state.
+    this->m_state = this->m_state == State::End ? State::Triggered : State::Initial;
 
     // Reset LTR329
     reset();
@@ -141,7 +146,7 @@ float cLTR329::readLux()
     else if(ratio < 0.64 &&  ratio >= 0.45)
         {
         lux = (4.2785 * data_ch0 - 1.9548 * data_ch1) / ALS_GAIN[gain] / ALS_INT[intTime] / pFactor;
-            }
+        }
     else if(ratio < 0.85 &&  ratio >= 0.64)
         {
         lux = (0.5926 * data_ch0 + 0.1185 * data_ch1) / ALS_GAIN[gain] / ALS_INT[intTime] / pFactor;

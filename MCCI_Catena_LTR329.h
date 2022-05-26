@@ -238,7 +238,7 @@ namespace McciCatenaLtr329
                 SoftReset                               =   0xD304,     // 1.4.10; no argument
                 };
 
-        // the errors
+            // the errors
             enum class Error : std::uint8_t
                 {
                 Success = 0,
@@ -258,7 +258,7 @@ namespace McciCatenaLtr329
                 SensorUpdateFailed,
                 };
 
-        // state of the measurement enging
+            // state of the measurement enging
             enum class State : std::uint8_t
                 {
                 Uninitialized,      /// this->begin() has never succeeded.
@@ -338,12 +338,26 @@ namespace McciCatenaLtr329
                 {
                 return getErrorName(this->m_lastError);
                 }
+            static const char *getStateName(State s);
+            const char *getCurrentStateName() const
+                {
+                return getStateName(this->getState());
+                }
+            bool isRunning() const
+                {
+                return this->m_state > State::End;
+                }
+            State getState() const
+                {
+                return this->m_state;
+                }
 
         private:
             Error m_lastError;
             TwoWire *m_wire;
             Pin_t m_pinReady;
             Address m_address;
+            State m_state;
             uint8_t readByte(uint8_t addr);
             uint16_t readAlsData(uint8_t ch);
 
