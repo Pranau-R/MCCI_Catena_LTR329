@@ -60,13 +60,14 @@ void setup()
     Serial.print("");
 
     // Start LTR329
-    if (! gLtr329.begin())
+    if (!gLtr329.begin())
         {
         Serial.println("gLtr329.begin() failed");
         }
 
     Serial.println("Found Sensor: LTR-329ALS-01");
     char tempString[64] = {};
+    Serial.print("");
     sprintf(tempString, "  Manufacture ID:         0x%02x", gLtr329.readManufacturerId());
     Serial.println(tempString);
     sprintf(tempString, "  Part Number:            0x%02x", gLtr329.readPartNumber());
