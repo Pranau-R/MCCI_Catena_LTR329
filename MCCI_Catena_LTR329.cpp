@@ -42,6 +42,8 @@ bool cLTR329::begin()
     this->m_wire->begin();
     // assume it's in idle state.
     this->m_state = this->m_state == State::End ? State::Triggered : State::Initial;
+    // Initialize pFactor
+    float pFactor = cLTR329_PFACTOR;
 
     // Reset LTR329
     reset();
@@ -133,25 +135,50 @@ float cLTR329::readLux()
 
     float ratio = data_ch1 / (data_ch0 + data_ch1);
     float lux;
-    float pFactor = cLTR329_PFACTOR;
+    float pFactor;
+    float scale = 1/(ALS_GAIN[gain] * ALS_INT[intTime] * pFactor);
+
+    struct param_t
+        {
+        float ch0scale;
+        float ch1scale;
+        };
+
+    const struct param_t param;
 
     if(ratio < 0.45)
         {
-        lux = (1.7743 * data_ch0 + 1.1059 * data_ch1) / ALS_GAIN[gain] / ALS_INT[intTime] / pFactor;
+        param = param_t{1.7743, 1.1059};
+        }
+    else if(ratio < 0.64 && ratio >= 0.45)
+        {
+        param = param_t{4.2785, -1.9548};
+        }
+    else if(ratio < 0.85 && ratio >= 0.64)
+        {
+        param = param_t{0.5926, 0.1185};
+        }
+    else
+        {
+        param = param_t{0, 0};
+        }
+    /*if(ratio < 0.45)
+        {
+        lux = (1.7743 * data_ch0 + 1.1059 * data_ch1) / scale;
         }
     else if(ratio < 0.64 &&  ratio >= 0.45)
         {
-        lux = (4.2785 * data_ch0 - 1.9548 * data_ch1) / ALS_GAIN[gain] / ALS_INT[intTime] / pFactor;
+        lux = (4.2785 * data_ch0 - 1.9548 * data_ch1) / scale;
         }
     else if(ratio < 0.85 &&  ratio >= 0.64)
         {
-        lux = (0.5926 * data_ch0 + 0.1185 * data_ch1) / ALS_GAIN[gain] / ALS_INT[intTime] / pFactor;
+        lux = (0.5926 * data_ch0 + 0.1185 * data_ch1) / scale;
         }
     else
         {
         lux = 0;
-        }
-        
+        }*/
+    lux = (data_ch0 * param.ch0scale + data_ch1 * param.ch1scale) * this->scale;
     return lux;
     }
 
