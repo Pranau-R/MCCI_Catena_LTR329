@@ -130,7 +130,7 @@ float cLTR329::readLux()
 
     if(data_ch0 + data_ch1 == 0)
         {
-        return 0; // Avoid to Div by Zero
+        return 0;
         }
 
     float ratio = data_ch1 / (data_ch0 + data_ch1);
@@ -138,47 +138,31 @@ float cLTR329::readLux()
     float pFactor;
     float scale = 1/(ALS_GAIN[gain] * ALS_INT[intTime] * pFactor);
 
-    struct param_t
+    struct luxConstant
         {
-        float ch0scale;
-        float ch1scale;
+        float ch0scale, ch1scale;
         };
 
-    const struct param_t param;
+    struct luxConstant param;
 
     if(ratio < 0.45)
         {
-        param = param_t{1.7743, 1.1059};
+        param = {1.7743, 1.1059};
         }
     else if(ratio < 0.64 && ratio >= 0.45)
         {
-        param = param_t{4.2785, -1.9548};
+        param = {4.2785, -1.9548};
         }
     else if(ratio < 0.85 && ratio >= 0.64)
         {
-        param = param_t{0.5926, 0.1185};
+        param = {0.5926, 0.1185};
         }
     else
         {
-        param = param_t{0, 0};
+        param = {0, 0};
         }
-    /*if(ratio < 0.45)
-        {
-        lux = (1.7743 * data_ch0 + 1.1059 * data_ch1) / scale;
-        }
-    else if(ratio < 0.64 &&  ratio >= 0.45)
-        {
-        lux = (4.2785 * data_ch0 - 1.9548 * data_ch1) / scale;
-        }
-    else if(ratio < 0.85 &&  ratio >= 0.64)
-        {
-        lux = (0.5926 * data_ch0 + 0.1185 * data_ch1) / scale;
-        }
-    else
-        {
-        lux = 0;
-        }*/
-    lux = (data_ch0 * param.ch0scale + data_ch1 * param.ch1scale) * this->scale;
+
+    lux = (data_ch0 * param.ch0scale + data_ch1 * param.ch1scale) * scale;
     return lux;
     }
 

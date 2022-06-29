@@ -45,7 +45,8 @@ Function:
         Initializes LTR329 Light Sensor
 
 Definition:
-        void setup (void);
+        void setup (
+                void)
 
 Returns:
         Functions returning type void: nothing.
