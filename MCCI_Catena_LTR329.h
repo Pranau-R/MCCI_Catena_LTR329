@@ -64,82 +64,82 @@ namespace McciCatenaLtr329
     static constexpr std::uint32_t kVersion = makeVersion(0,1,0,0);
 
     // Device Address
-    #define cLTR329_I2C_ADDRESS 0x29 // 7-bit Address
+    #define LTR329_I2C_ADDRESS 0x29 // 7-bit Address
 
     // Register Address
-    #define cLTR329_ADDR_ALS_CONTROL        0x80
-    #define cLTR329_ADDR_ALS_MEAS_RATE      0x85
-    #define cLTR329_ADDR_PART_ID            0x86
-    #define cLTR329_ADDR_MANUFAC_ID         0x87
-    #define cLTR329_ADDR_ALS_DATA_CH_1_0    0x88
-    #define cLTR329_ADDR_ALS_DATA_CH_1_1    0x89
-    #define cLTR329_ADDR_ALS_DATA_CH_0_0    0x8A
-    #define cLTR329_ADDR_ALS_DATA_CH_0_1    0x8B
-    #define cLTR329_ADDR_ALS_STATUS         0x8C
+    #define LTR329_ADDR_ALS_CONTROL        0x80
+    #define LTR329_ADDR_ALS_MEAS_RATE      0x85
+    #define LTR329_ADDR_PART_ID            0x86
+    #define LTR329_ADDR_MANUFAC_ID         0x87
+    #define LTR329_ADDR_ALS_DATA_CH_1_0    0x88
+    #define LTR329_ADDR_ALS_DATA_CH_1_1    0x89
+    #define LTR329_ADDR_ALS_DATA_CH_0_0    0x8A
+    #define LTR329_ADDR_ALS_DATA_CH_0_1    0x8B
+    #define LTR329_ADDR_ALS_STATUS         0x8C
 
     // PFactoer for Calculating lux
-    #define cLTR329_PFACTOR                 1
+    #define LTR329_PFACTOR                 1
 
     // ALS Gain Bit
     typedef enum
         {
-        cLTR329_ALS_GAIN_x1     = 0b000,
-        cLTR329_ALS_GAIN_x2     = 0b001,
-        cLTR329_ALS_GAIN_x4     = 0b010,
-        cLTR329_ALS_GAIN_x8     = 0b011,
-        cLTR329_ALS_GAIN_x48    = 0b110,
-        cLTR329_ALS_GAIN_x96    = 0b111,
-        cLTR329_ALS_GAIN_COUNT  = 8,
+        LTR329_ALS_GAIN_x1     = 0b000,
+        LTR329_ALS_GAIN_x2     = 0b001,
+        LTR329_ALS_GAIN_x4     = 0b010,
+        LTR329_ALS_GAIN_x8     = 0b011,
+        LTR329_ALS_GAIN_x48    = 0b110,
+        LTR329_ALS_GAIN_x96    = 0b111,
+        LTR329_ALS_GAIN_COUNT  = 8,
         } ALS_GAIN_Enum;
 
     // ALS Integration Time
     typedef enum
         {
-        cLTR329_ALS_INT_100ms   = 0b000,
-        cLTR329_ALS_INT_50ms    = 0b001,
-        cLTR329_ALS_INT_200ms   = 0b010,
-        cLTR329_ALS_INT_400ms   = 0b011,
-        cLTR329_ALS_INT_150ms   = 0b100,
-        cLTR329_ALS_INT_250ms   = 0b101,
-        cLTR329_ALS_INT_300ms   = 0b110,
-        cLTR329_ALS_INT_350ms   = 0b111,
-        cLTR329_ALS_INT_COUNT   = 8,
+        LTR329_ALS_INT_100ms   = 0b000,
+        LTR329_ALS_INT_50ms    = 0b001,
+        LTR329_ALS_INT_200ms   = 0b010,
+        LTR329_ALS_INT_400ms   = 0b011,
+        LTR329_ALS_INT_150ms   = 0b100,
+        LTR329_ALS_INT_250ms   = 0b101,
+        LTR329_ALS_INT_300ms   = 0b110,
+        LTR329_ALS_INT_350ms   = 0b111,
+        LTR329_ALS_INT_COUNT   = 8,
         } ALS_INT_Enum;
 
     // ALS Measuement Rate
     typedef enum
         {
-        cLTR329_ALS_RATE_50ms   = 0b000,
-        cLTR329_ALS_RATE_100ms  = 0b001,
-        cLTR329_ALS_RATE_200ms  = 0b010,
-        cLTR329_ALS_RATE_500ms  = 0b011,
-        cLTR329_ALS_RATE_1000ms = 0b100,
-        cLTR329_ALS_RATE_2000ms = 0b101,
+        LTR329_ALS_RATE_50ms   = 0b000,
+        LTR329_ALS_RATE_100ms  = 0b001,
+        LTR329_ALS_RATE_200ms  = 0b010,
+        LTR329_ALS_RATE_500ms  = 0b011,
+        LTR329_ALS_RATE_1000ms = 0b100,
+        LTR329_ALS_RATE_2000ms = 0b101,
         } ALS_MEAS_Enum;
 
     // Co-efficient for Calc lux
-    const uint8_t ALS_GAIN[cLTR329_ALS_GAIN_COUNT] =
+    const uint8_t ALS_GAIN[LTR329_ALS_GAIN_COUNT] =
         {
-        1,      // cLTR329_ALS_GAIN_x1
-        2,      // cLTR329_ALS_GAIN_x2
-        4,      // cLTR329_ALS_GAIN_x4
-        8,      // cLTR329_ALS_GAIN_x8
+        1,      // LTR329_ALS_GAIN_x1
+        2,      // LTR329_ALS_GAIN_x2
+        4,      // LTR329_ALS_GAIN_x4
+        8,      // LTR329_ALS_GAIN_x8
         0,      // Reserved
         0,      // Reserved
-        48,     // cLTR329_ALS_GAIN_x48
-        96,     // cLTR329_ALS_GAIN_x96
+        48,     // LTR329_ALS_GAIN_x48
+        96,     // LTR329_ALS_GAIN_x96
         };
 
-    const float ALS_INT[cLTR329_ALS_INT_COUNT] =
+    const float ALS_INT[LTR329_ALS_INT_COUNT] =
         {
-        1,      // cLTR329_ALS_INT_100ms
-        0.5,    // cLTR329_ALS_INT_50ms
-        2,      // cLTR329_ALS_INT_200ms
-        4,      // cLTR329_ALS_INT_400ms
-        1.5,    // cLTR329_ALS_INT_150ms
-        2.5,    // cLTR329_ALS_INT_250ms
-        3,      // cLTR329_ALS_INT_300ms
-        3.5,    // cLTR329_ALS_INT_350ms
+        1,      // LTR329_ALS_INT_100ms
+        0.5,    // LTR329_ALS_INT_50ms
+        2,      // LTR329_ALS_INT_200ms
+        4,      // LTR329_ALS_INT_400ms
+        1.5,    // LTR329_ALS_INT_150ms
+        2.5,    // LTR329_ALS_INT_250ms
+        3,      // LTR329_ALS_INT_300ms
+        3.5,    // LTR329_ALS_INT_350ms
         };
 
     typedef union
@@ -204,7 +204,7 @@ namespace McciCatenaLtr329
             enum class Address : std::int8_t
                 {
                 Error = -1,
-                LTR329 = 0x61,
+                LTR329 = 0x29,
                 };
 
             // the type for pin assignments, in case the ready pin is used
@@ -222,19 +222,6 @@ namespace McciCatenaLtr329
                 {
                 Success = 0,
                 NoWire,
-                CommandWriteFailed,
-                CommandWriteBufferFailed,
-                InternalInvalidParameter,
-                I2cReadShort,
-                I2cReadRequest,
-                I2cReadLong,
-                Busy,
-                NotMeasuring,
-                Crc,
-                Uninitialized,
-                InvalidParameter,
-                InternalInvalidState,
-                SensorUpdateFailed,
                 };
 
             // state of the measurement enging
@@ -254,18 +241,6 @@ namespace McciCatenaLtr329
             static constexpr const char * const m_szErrorMessages =
                 "Success\0"
                 "NoWire\0"
-                "CommandWriteFailed\0"
-                "CommandWriteBufferFailed\0"
-                "InternalInvalidParameter\0"
-                "I2cReadShort\0"
-                "I2cReadRequest\0"
-                "I2cReadLong\0"
-                "Busy\0"
-                "NotMeasuring\0"
-                "Crc\0"
-                "Uninitialized\0"
-                "InvalidParmaeter\0"
-                "InternalInvalidState\0"
                 ;
 
             // this is internal -- centralize it but require that clients call the
@@ -347,9 +322,9 @@ namespace McciCatenaLtr329
             void writeByte(uint8_t addr, uint8_t data);
 
             bool isActiveMode = false;
-            ALS_GAIN_Enum gain = cLTR329_ALS_GAIN_x1;
-            ALS_INT_Enum intTime = cLTR329_ALS_INT_100ms;
-            ALS_MEAS_Enum measRate = cLTR329_ALS_RATE_500ms;
+            ALS_GAIN_Enum gain = LTR329_ALS_GAIN_x1;
+            ALS_INT_Enum intTime = LTR329_ALS_INT_100ms;
+            ALS_MEAS_Enum measRate = LTR329_ALS_RATE_500ms;
         };
 
     } // namespace McciCatenaLtr329

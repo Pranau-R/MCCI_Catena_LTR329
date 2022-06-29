@@ -78,11 +78,11 @@ void setup()
     Serial.print("  Status Register:        0b");
     Serial.println(gLtr329.readStatus().raw, BIN);
 
-    gLtr329.writetControl(true, cLTR329_ALS_GAIN_x8);
+    gLtr329.writetControl(true, LTR329_ALS_GAIN_x8);
     Serial.print("  Control Register:       0b");
     Serial.println(gLtr329.readControl().raw, BIN);
 
-    gLtr329.writeMeasRate(cLTR329_ALS_INT_100ms, cLTR329_ALS_RATE_500ms);
+    gLtr329.writeMeasRate(LTR329_ALS_INT_100ms, LTR329_ALS_RATE_500ms);
     Serial.print("  Measure Rate Register:  0b");
     Serial.println(gLtr329.readMeasRate().raw, BIN);
     }

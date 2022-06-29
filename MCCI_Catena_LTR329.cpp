@@ -43,13 +43,13 @@ bool cLTR329::begin()
     // assume it's in idle state.
     this->m_state = this->m_state == State::End ? State::Triggered : State::Initial;
     // Initialize pFactor
-    float pFactor = cLTR329_PFACTOR;
+    float pFactor = LTR329_PFACTOR;
 
     // Reset LTR329
     reset();
     // Initialize Parameters
     isActiveMode = true;
-    gain = cLTR329_ALS_GAIN_x1;
+    gain = LTR329_ALS_GAIN_x1;
     // Set Control REG
     writetControl(isActiveMode, gain);
     // Wait for Activate LTR329
@@ -64,13 +64,13 @@ void cLTR329::reset()
 
     ALS_CONTR_REG ctrl = {};
     ctrl.resetState = true;
-    writeByte(cLTR329_ADDR_ALS_CONTROL, ctrl.raw);
+    writeByte(LTR329_ADDR_ALS_CONTROL, ctrl.raw);
 
     // Wait for resetting
     do
         {
         Serial.print(".");
-        ctrl.raw = readByte(cLTR329_ADDR_ALS_CONTROL);
+        ctrl.raw = readByte(LTR329_ADDR_ALS_CONTROL);
         }
     while(ctrl.resetState);
 
@@ -175,13 +175,13 @@ void cLTR329::writetControl(bool m_isActiveMode, ALS_GAIN_Enum m_gain)
     ctrl.activeMode = isActiveMode;
     ctrl.gain = gain;
 
-    writeByte(cLTR329_ADDR_ALS_CONTROL, ctrl.raw);
+    writeByte(LTR329_ADDR_ALS_CONTROL, ctrl.raw);
     }
 
 ALS_CONTR_REG cLTR329::readControl()
     {
     ALS_CONTR_REG ctrl;
-    ctrl.raw = readByte(cLTR329_ADDR_ALS_CONTROL);
+    ctrl.raw = readByte(LTR329_ADDR_ALS_CONTROL);
     return ctrl;
     }
 
@@ -194,38 +194,38 @@ void cLTR329::writeMeasRate(ALS_INT_Enum m_intTime, ALS_MEAS_Enum m_measRate)
     mr.intTime = intTime;
     mr.measRate = measRate;
 
-    writeByte(cLTR329_ADDR_ALS_MEAS_RATE, mr.raw);
+    writeByte(LTR329_ADDR_ALS_MEAS_RATE, mr.raw);
     }
 
 ALS_MEAS_RATE_REG cLTR329::readMeasRate()
     {
     ALS_MEAS_RATE_REG mr;
-    mr.raw = readByte(cLTR329_ADDR_ALS_MEAS_RATE);
+    mr.raw = readByte(LTR329_ADDR_ALS_MEAS_RATE);
     return mr;
     }
 
 ALS_PS_STATUS_REG cLTR329::readStatus()
     {
     ALS_PS_STATUS_REG status;
-    status.raw = readByte(cLTR329_ADDR_ALS_STATUS);
+    status.raw = readByte(LTR329_ADDR_ALS_STATUS);
     return status;
     }
 
 uint8_t cLTR329::readManufacturerId()
     {
-    uint8_t data = readByte(cLTR329_ADDR_MANUFAC_ID);
+    uint8_t data = readByte(LTR329_ADDR_MANUFAC_ID);
     return data;
     }
 
 uint8_t cLTR329::readPartNumber()
     {
-    uint8_t data = readByte(cLTR329_ADDR_PART_ID);
+    uint8_t data = readByte(LTR329_ADDR_PART_ID);
     return data >> 4;
     }
 
 uint8_t cLTR329::readRevisionId()
     {
-    uint8_t data = readByte(cLTR329_ADDR_PART_ID);
+    uint8_t data = readByte(LTR329_ADDR_PART_ID);
     return data & 0x0F;
     }
 
@@ -235,11 +235,11 @@ uint8_t cLTR329::readByte(uint8_t addr)
     uint8_t rdDataCount;
     do
         {
-        Wire.beginTransmission(cLTR329_I2C_ADDRESS);
+        Wire.beginTransmission(LTR329_I2C_ADDRESS);
         Wire.write(addr);
         Wire.endTransmission(false); // Restart
         delay(10);
-        rdDataCount = Wire.requestFrom(cLTR329_I2C_ADDRESS, 1);
+        rdDataCount = Wire.requestFrom(LTR329_I2C_ADDRESS, 1);
         }
 
     while(rdDataCount == 0);
@@ -259,13 +259,13 @@ uint16_t cLTR329::readAlsData(uint8_t ch)
 
     if(ch == 0)
         {
-        addr_lsb = cLTR329_ADDR_ALS_DATA_CH_0_0;
-        addr_msb = cLTR329_ADDR_ALS_DATA_CH_0_1;
+        addr_lsb = LTR329_ADDR_ALS_DATA_CH_0_0;
+        addr_msb = LTR329_ADDR_ALS_DATA_CH_0_1;
         }
     else
         {
-        addr_lsb = cLTR329_ADDR_ALS_DATA_CH_1_0;
-        addr_msb = cLTR329_ADDR_ALS_DATA_CH_1_1;
+        addr_lsb = LTR329_ADDR_ALS_DATA_CH_1_0;
+        addr_msb = LTR329_ADDR_ALS_DATA_CH_1_1;
         }
 
     data_lsb = readByte(addr_lsb);
@@ -284,7 +284,7 @@ uint16_t cLTR329::readAlsData(uint8_t ch)
 
 void cLTR329::writeByte(uint8_t addr, uint8_t data)
     {
-    Wire.beginTransmission(cLTR329_I2C_ADDRESS);
+    Wire.beginTransmission(LTR329_I2C_ADDRESS);
     Wire.write(addr);
     Wire.write(data);
     Wire.endTransmission();
