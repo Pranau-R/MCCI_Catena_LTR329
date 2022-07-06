@@ -105,5 +105,5 @@ void loop()
     auto lux = gLtr329.readLux();
     Serial.print("Lux = ");
     Serial.println(lux);
-    delay (30000);
+    delay (3000);
     }

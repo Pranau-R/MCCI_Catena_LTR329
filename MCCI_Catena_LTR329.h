@@ -265,10 +265,10 @@ namespace McciCatenaLtr329
 
             float readLux();
 
-            void writetControl(bool m_isActiveMode, ALS_GAIN_Enum m_gain);
+            void writetControl(bool isActiveMode, ALS_GAIN_Enum gain);
             ALS_CONTR_REG readControl();
 
-            void writeMeasRate(ALS_INT_Enum m_intTime, ALS_MEAS_Enum m_measRate);
+            void writeMeasRate(ALS_INT_Enum intTime, ALS_MEAS_Enum measRate);
             ALS_MEAS_RATE_REG readMeasRate();
 
             uint8_t readPartNumber();
@@ -321,10 +321,10 @@ namespace McciCatenaLtr329
 
             void writeByte(uint8_t addr, uint8_t data);
 
-            bool isActiveMode = false;
-            ALS_GAIN_Enum gain = LTR329_ALS_GAIN_x1;
-            ALS_INT_Enum intTime = LTR329_ALS_INT_100ms;
-            ALS_MEAS_Enum measRate = LTR329_ALS_RATE_500ms;
+            bool m_isActiveMode = false;
+            ALS_GAIN_Enum m_gain = LTR329_ALS_GAIN_x1;
+            ALS_INT_Enum m_intTime = LTR329_ALS_INT_100ms;
+            ALS_MEAS_Enum m_measRate = LTR329_ALS_RATE_500ms;
         };
 
     } // namespace McciCatenaLtr329

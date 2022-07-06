@@ -48,10 +48,10 @@ bool cLTR329::begin()
     // Reset LTR329
     reset();
     // Initialize Parameters
-    isActiveMode = true;
-    gain = LTR329_ALS_GAIN_x1;
+    m_isActiveMode = true;
+    m_gain = LTR329_ALS_GAIN_x1;
     // Set Control REG
-    writetControl(isActiveMode, gain);
+    writetControl(m_isActiveMode, m_gain);
     // Wait for Activate LTR329
     delay(10);
     }
@@ -136,7 +136,16 @@ float cLTR329::readLux()
     float ratio = data_ch1 / (data_ch0 + data_ch1);
     float lux;
     float pFactor;
-    float scale = 1/(ALS_GAIN[gain] * ALS_INT[intTime] * pFactor);
+    Serial.print ("ALS_GAIN[m_gain] is : ");
+    Serial.println (ALS_GAIN[m_gain]);
+
+    Serial.print ("ALS_INT[m_intTime] is : ");
+    Serial.println (ALS_INT[m_intTime]);
+
+    Serial.print ("pFactor is : ");
+    Serial.println (pFactor);
+
+    float scale = 1/(ALS_GAIN[m_gain] * ALS_INT[m_intTime] * pFactor);
 
     struct luxConstant
         {
@@ -147,33 +156,33 @@ float cLTR329::readLux()
 
     if(ratio < 0.45)
         {
-        param = {1.7743, 1.1059};
+        const struct luxConstant param = {1.7743, 1.1059};
         }
     else if(ratio < 0.64 && ratio >= 0.45)
         {
-        param = {4.2785, -1.9548};
+        const struct luxConstant param = {4.2785, -1.9548};
         }
     else if(ratio < 0.85 && ratio >= 0.64)
         {
-        param = {0.5926, 0.1185};
+        const struct luxConstant param = {0.5926, 0.1185};
         }
     else
         {
-        param = {0, 0};
+        const struct luxConstant param = {0, 0};
         }
 
     lux = (data_ch0 * param.ch0scale + data_ch1 * param.ch1scale) * scale;
     return lux;
     }
 
-void cLTR329::writetControl(bool m_isActiveMode, ALS_GAIN_Enum m_gain)
+void cLTR329::writetControl(bool isActiveMode, ALS_GAIN_Enum gain)
     {
-    isActiveMode = m_isActiveMode;
-    gain = m_gain;
+    m_isActiveMode = isActiveMode;
+    m_gain = gain;
 
     ALS_CONTR_REG ctrl = {};
-    ctrl.activeMode = isActiveMode;
-    ctrl.gain = gain;
+    ctrl.activeMode = m_isActiveMode;
+    ctrl.gain = m_gain;
 
     writeByte(LTR329_ADDR_ALS_CONTROL, ctrl.raw);
     }
@@ -185,14 +194,14 @@ ALS_CONTR_REG cLTR329::readControl()
     return ctrl;
     }
 
-void cLTR329::writeMeasRate(ALS_INT_Enum m_intTime, ALS_MEAS_Enum m_measRate)
+void cLTR329::writeMeasRate(ALS_INT_Enum intTime, ALS_MEAS_Enum measRate)
     {
-    intTime = m_intTime;
-    measRate = m_measRate;
+    m_intTime = intTime;
+    m_measRate = measRate;
 
     ALS_MEAS_RATE_REG mr = {};
-    mr.intTime = intTime;
-    mr.measRate = measRate;
+    mr.intTime = m_intTime;
+    mr.measRate = m_measRate;
 
     writeByte(LTR329_ADDR_ALS_MEAS_RATE, mr.raw);
     }
