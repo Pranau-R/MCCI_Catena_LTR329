@@ -9,7 +9,7 @@ Copyright and License:
         See accompanying LICENSE file.
 
 Author:
-        Pranau R, MCCI Corporation   June 2022
+        Pranau R, MCCI Corporation   July 2022
 
 */
 
@@ -105,5 +105,5 @@ void loop()
     auto lux = gLtr329.readLux();
     Serial.print("Lux = ");
     Serial.println(lux);
-    delay (3000);
+    delay (30000);
     }

@@ -9,7 +9,7 @@ Copyright and License:
         See accompanying LICENSE file.
 
 Author:
-        Pranau, MCCI Corporation   June 2022
+        Pranau R, MCCI Corporation   July 2022
 
 */
 
@@ -322,6 +322,7 @@ namespace McciCatenaLtr329
             void writeByte(uint8_t addr, uint8_t data);
 
             bool m_isActiveMode = false;
+            int m_pFactor = LTR329_PFACTOR;
             ALS_GAIN_Enum m_gain = LTR329_ALS_GAIN_x1;
             ALS_INT_Enum m_intTime = LTR329_ALS_INT_100ms;
             ALS_MEAS_Enum m_measRate = LTR329_ALS_RATE_500ms;

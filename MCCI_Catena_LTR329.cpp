@@ -9,7 +9,7 @@ Copyright and License:
         See accompanying LICENSE file.
 
 Author:
-        Pranau, MCCI Corporation   June 2022
+        Pranau R, MCCI Corporation   July 2022
 
 */
 
@@ -42,8 +42,6 @@ bool cLTR329::begin()
     this->m_wire->begin();
     // assume it's in idle state.
     this->m_state = this->m_state == State::End ? State::Triggered : State::Initial;
-    // Initialize pFactor
-    float pFactor = LTR329_PFACTOR;
 
     // Reset LTR329
     reset();
@@ -115,11 +113,8 @@ float cLTR329::readLux()
 
     while(!status.isNewData || status.isInValid);
 
-    uint16_t data_ch0;
-    uint16_t data_ch1;
-
-    data_ch1 = readAlsData(1);
-    data_ch0 = readAlsData(0);
+    float data_ch1 = readAlsData(1);
+    float data_ch0 = readAlsData(0);
 
     #ifdef DEBUG
         Serial.print("Read Data CH1: ");
@@ -135,17 +130,7 @@ float cLTR329::readLux()
 
     float ratio = data_ch1 / (data_ch0 + data_ch1);
     float lux;
-    float pFactor;
-    Serial.print ("ALS_GAIN[m_gain] is : ");
-    Serial.println (ALS_GAIN[m_gain]);
-
-    Serial.print ("ALS_INT[m_intTime] is : ");
-    Serial.println (ALS_INT[m_intTime]);
-
-    Serial.print ("pFactor is : ");
-    Serial.println (pFactor);
-
-    float scale = 1/(ALS_GAIN[m_gain] * ALS_INT[m_intTime] * pFactor);
+    float scale = 1/(ALS_GAIN[m_gain] * ALS_INT[m_intTime] * m_pFactor);
 
     struct luxConstant
         {
@@ -156,19 +141,19 @@ float cLTR329::readLux()
 
     if(ratio < 0.45)
         {
-        const struct luxConstant param = {1.7743, 1.1059};
+        param = {1.7743, 1.1059};
         }
     else if(ratio < 0.64 && ratio >= 0.45)
         {
-        const struct luxConstant param = {4.2785, -1.9548};
+        param = {4.2785, -1.9548};
         }
     else if(ratio < 0.85 && ratio >= 0.64)
         {
-        const struct luxConstant param = {0.5926, 0.1185};
+        param = {0.5926, 0.1185};
         }
     else
         {
-        const struct luxConstant param = {0, 0};
+        param = {0, 0};
         }
 
     lux = (data_ch0 * param.ch0scale + data_ch1 * param.ch1scale) * scale;
