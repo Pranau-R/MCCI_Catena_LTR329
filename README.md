@@ -71,7 +71,7 @@ using namespace McciCatenaLtr329;
 //    cLTR329::Address::LTR329 (0x61)
 // If RDY pin is not used, supply -1 as the default.
 // The default for the interface is &Wire, and the default i2c_address is 0x29H.
-cLTR329 myLtr(&Wire, cLTR329::Address::0x29H, -1);
+cLTR329 myLtr(&Wire, cLTR329::Address::LTR329, -1);
 ```
 
 You need to declare one `cLTR329` instance for each sensor. (Because all LTR329s have the same I2C address, you must either use multiple `TwoWire` busses or must implement some form of multiplexing.)
@@ -98,35 +98,47 @@ It returns a `floating` integer which is nothing but Lux.
 
 ### Reset Sensor
 
+Use the `reset()` method to reset the sensor.
 ```c++
 void cLTR329::reset()
 ```
 
-### Write the sensor
+### Write the control register
 
 ```c++
-void cLTR329::writetControl(bool _isActiveMode, ALS_GAIN_Enum _gain)
+void cLTR329::writetControl(bool isActiveMode, ALS_GAIN_Enum gain)
 ```
 
-### Read the sensor
+It writes the control register of a sensor by passing a boolean control mode and a gain. 
+
+### Read the control register
 
 ```c++
 ALS_CONTR_REG cLTR329::readControl()
 ```
 
-### Write the measure rate of sensor
+It is used to read the current control register of the sensor.
+
+### Write the measure rate register of sensor
 
 ```c++
-void cLTR329::writeMeasRate(ALS_INT_Enum _intTime, ALS_MEAS_Enum _measRate)
+void cLTR329::writeMeasRate(ALS_INT_Enum intTime, ALS_MEAS_Enum measRate)
 ```
 
-### Read the measure rate of sensor
+It writes the measure rate register of a sensor by passing a measure rate and a count.
+
+### Read the measure rate register of sensor
+
 
 ```c++
 ALS_MEAS_RATE_REG cLTR329::readMeasRate()
 ```
 
-### Read the sensor status
+It is used to read the current measure rate register of the sensor.
+
+### Read the status register
+
+Use the `readStatus()` method to read the status registor of the sensor.
 
 ```c++
 ALS_PS_STATUS_REG cLTR329::readStatus()
