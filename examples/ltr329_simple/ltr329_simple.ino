@@ -85,6 +85,8 @@ void setup()
     gLtr329.writeMeasRate(LTR329_ALS_INT_100ms, LTR329_ALS_RATE_500ms);
     Serial.print("  Measure Rate Register:  0b");
     Serial.println(gLtr329.readMeasRate().raw, BIN);
+
+    delay (5000);
     }
 
 /*
