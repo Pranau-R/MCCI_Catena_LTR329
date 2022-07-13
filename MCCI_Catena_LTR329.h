@@ -63,9 +63,6 @@ namespace McciCatenaLtr329
     /// version of library, for use by clients in static_asserts
     static constexpr std::uint32_t kVersion = makeVersion(0,1,0,0);
 
-    // Device Address
-    #define LTR329_I2C_ADDRESS 0x29 // 7-bit Address
-
     // Register Address
     #define LTR329_ADDR_ALS_CONTROL        0x80
     #define LTR329_ADDR_ALS_MEAS_RATE      0x85
@@ -322,7 +319,7 @@ namespace McciCatenaLtr329
             void writeByte(uint8_t addr, uint8_t data);
 
             bool m_isActiveMode = false;
-            int m_pFactor = LTR329_PFACTOR;
+            uint8_t m_pFactor;
             ALS_GAIN_Enum m_gain = LTR329_ALS_GAIN_x1;
             ALS_INT_Enum m_intTime = LTR329_ALS_INT_100ms;
             ALS_MEAS_Enum m_measRate = LTR329_ALS_RATE_500ms;

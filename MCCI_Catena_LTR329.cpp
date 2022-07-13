@@ -43,8 +43,12 @@ bool cLTR329::begin()
     // assume it's in idle state.
     this->m_state = this->m_state == State::End ? State::Triggered : State::Initial;
 
+    //Initialize PFactor
+    m_pFactor = LTR329_PFACTOR;
+
     // Reset LTR329
     reset();
+
     // Initialize Parameters
     m_isActiveMode = true;
     m_gain = LTR329_ALS_GAIN_x1;
@@ -113,8 +117,11 @@ float cLTR329::readLux()
 
     while(!status.isNewData || status.isInValid);
 
-    float data_ch1 = readAlsData(1);
-    float data_ch0 = readAlsData(0);
+    static constexpr uint8_t kChannelOne = 1;
+    static constexpr uint8_t kChannelZero = 0;
+
+    float data_ch1 = readAlsData(kChannelOne);
+    float data_ch0 = readAlsData(kChannelZero);
 
     #ifdef DEBUG
         Serial.print("Read Data CH1: ");
@@ -184,18 +191,18 @@ void cLTR329::writeMeasRate(ALS_INT_Enum intTime, ALS_MEAS_Enum measRate)
     m_intTime = intTime;
     m_measRate = measRate;
 
-    ALS_MEAS_RATE_REG mr = {};
-    mr.intTime = m_intTime;
-    mr.measRate = m_measRate;
+    ALS_MEAS_RATE_REG measreg = {};
+    measreg.intTime = m_intTime;
+    measreg.measRate = m_measRate;
 
-    writeByte(LTR329_ADDR_ALS_MEAS_RATE, mr.raw);
+    writeByte(LTR329_ADDR_ALS_MEAS_RATE, measreg.raw);
     }
 
 ALS_MEAS_RATE_REG cLTR329::readMeasRate()
     {
-    ALS_MEAS_RATE_REG mr;
-    mr.raw = readByte(LTR329_ADDR_ALS_MEAS_RATE);
-    return mr;
+    ALS_MEAS_RATE_REG measreg;
+    measreg.raw = readByte(LTR329_ADDR_ALS_MEAS_RATE);
+    return measreg;
     }
 
 ALS_PS_STATUS_REG cLTR329::readStatus()
@@ -229,11 +236,11 @@ uint8_t cLTR329::readByte(uint8_t addr)
     uint8_t rdDataCount;
     do
         {
-        Wire.beginTransmission(LTR329_I2C_ADDRESS);
+        Wire.beginTransmission(std::uint8_t(this->m_address));
         Wire.write(addr);
         Wire.endTransmission(false); // Restart
         delay(10);
-        rdDataCount = Wire.requestFrom(LTR329_I2C_ADDRESS, 1);
+        rdDataCount = Wire.requestFrom(std::uint8_t(this->m_address), 1);
         }
 
     while(rdDataCount == 0);
@@ -278,7 +285,7 @@ uint16_t cLTR329::readAlsData(uint8_t ch)
 
 void cLTR329::writeByte(uint8_t addr, uint8_t data)
     {
-    Wire.beginTransmission(LTR329_I2C_ADDRESS);
+    Wire.beginTransmission(std::uint8_t(this->m_address));
     Wire.write(addr);
     Wire.write(data);
     Wire.endTransmission();
