@@ -137,33 +137,33 @@ float cLTR329::readLux()
 
     float ratio = data_ch1 / (data_ch0 + data_ch1);
     float lux;
-    float scale = 1/(ALS_GAIN[m_gain] * ALS_INT[m_intTime] * m_pFactor);
+    m_scale = 1/(ALS_GAIN[m_gain] * ALS_INT[m_intTime] * m_pFactor);
 
-    struct luxConstant
+    struct luxConstant_t
         {
         float ch0scale, ch1scale;
         };
 
-    struct luxConstant param;
+    struct luxConstant_t param;
 
     if(ratio < 0.45)
         {
-        param = {1.7743, 1.1059};
+        param = luxConstant_t{1.7743, 1.1059};
         }
     else if(ratio < 0.64 && ratio >= 0.45)
         {
-        param = {4.2785, -1.9548};
+        param = luxConstant_t{4.2785, -1.9548};
         }
     else if(ratio < 0.85 && ratio >= 0.64)
         {
-        param = {0.5926, 0.1185};
+        param = luxConstant_t{0.5926, 0.1185};
         }
     else
         {
-        param = {0, 0};
+        param = luxConstant_t{0, 0};
         }
 
-    lux = (data_ch0 * param.ch0scale + data_ch1 * param.ch1scale) * scale;
+    lux = (data_ch0 * param.ch0scale + data_ch1 * param.ch1scale) * this->m_scale;
     return lux;
     }
 

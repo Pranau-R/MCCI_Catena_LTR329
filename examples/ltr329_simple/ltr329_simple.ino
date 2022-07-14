@@ -67,14 +67,16 @@ void setup()
         }
 
     Serial.println("Found Sensor: LTR-329ALS-01");
-    char tempString[64] = {};
-    Serial.print("");
-    sprintf(tempString, "  Manufacture ID:         0x%02x", gLtr329.readManufacturerId());
-    Serial.println(tempString);
-    sprintf(tempString, "  Part Number:            0x%02x", gLtr329.readPartNumber());
-    Serial.println(tempString);
-    sprintf(tempString, "  Revision ID:            0x%02x", gLtr329.readRevisionId());
-    Serial.println(tempString);
+
+    Serial.print("  Manufacture ID:         0x");
+    Serial.println(gLtr329.readManufacturerId(), HEX);
+
+    Serial.print("  Part Number:            0x");
+    Serial.println(gLtr329.readPartNumber(), HEX);
+
+    Serial.print("  Revision ID:            0x");
+    Serial.println(gLtr329.readRevisionId(), HEX);
+
     Serial.print("  Status Register:        0b");
     Serial.println(gLtr329.readStatus().raw, BIN);
 
@@ -105,7 +107,7 @@ Returns:
 void loop()
     {
     auto lux = gLtr329.readLux();
-    Serial.print("Lux = ");
+    Serial.print("Lux: ");
     Serial.println(lux);
     delay (30000);
     }

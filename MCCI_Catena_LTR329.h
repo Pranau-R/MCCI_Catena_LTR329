@@ -320,6 +320,7 @@ namespace McciCatenaLtr329
 
             bool m_isActiveMode = false;
             uint8_t m_pFactor;
+            float m_scale;
             ALS_GAIN_Enum m_gain = LTR329_ALS_GAIN_x1;
             ALS_INT_Enum m_intTime = LTR329_ALS_INT_100ms;
             ALS_MEAS_Enum m_measRate = LTR329_ALS_RATE_500ms;
